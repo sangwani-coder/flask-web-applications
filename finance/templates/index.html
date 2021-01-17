@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Shares summary
+{% endblock %}
+
+{% block main %}
+<h1>Personal Summary</h1>
+   <table id="headers">
+
+            <tr>
+                <th>Symbol</th>
+                <th>Number of Shares</th>
+                <th>Stock Price</th>
+                <th>Value</th>
+            </tr>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock['stock'].upper() }}</td>
+                    <td>{{ stock['number_shares'] }}</td>
+                    <td>{{ stock['price'] }}</td>
+                    <td>{{ stock['total']}}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                 <td>CASH</td>
+                <td></td>
+                <td></td>
+                <td>{{ cash }}</td>
+            </tr>
+            <tr>
+               <td></td>
+                <td></td>
+                <td><b>TOTAL CASH</b></td>
+                <td><b>{{ total }}</b></td>
+            </tr>
+        </table>
+
+<div id ="deal">
+    <h3>Sell or Buy stock in portfolio</h3>
+    <form action="/buy" method="post">
+        <div class="dropdown">
+                <select name="stock">
+                    {% for stock in stocks %}
+                        <option value="{{ stock['stock'] }}">{{ stock['stock'].upper()}}</option>
+                    {% endfor %}
+                </select>
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" min="1" name="shares" placeholder="Quantity" type="number">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Buy stock</button>
+        <button class="btn btn-primary" type="submit" formaction = "/sell">Sell Stock</button>
+    </form>
+</div>
+{% endblock %}
